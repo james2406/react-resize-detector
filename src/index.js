@@ -1,6 +1,7 @@
 import React, {
   PureComponent, Component, isValidElement, cloneElement, createElement,
 } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ResizeObserver from 'resize-observer-polyfill';
 import { debounce, throttle, isFunction } from 'lodash';
@@ -68,7 +69,8 @@ class ResizeDetector extends PureComponent {
   getElement = () => {
     const { resizableElementId } = this.props;
 
-    const otherElement = resizableElementId && document.getElementById(resizableElementId);
+    const doc = ReactDOM.findDOMNode(this).ownerDocument;
+    const otherElement = resizableElementId && doc.getElementById(resizableElementId);
     const parentElement = this.el && this.el.parentElement;
 
     const resizableElement = otherElement || parentElement;
